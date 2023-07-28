@@ -54,7 +54,7 @@ function dpm_main_callback() {
 	}
 	?>
 	<div class="wrap"><div id="icon-tools" class="icon32"></div>
-		<h2>Delete Post Meta</h2>
+		<h2><?php echo __('Delete Post Meta', 'delete-post-meta'); ?></h2>
 		<div class="notice notice-warning inline">
 			<p><strong>Warning:</strong> Use this plugin with caution. It will delete all post meta based on a meta key.</p>
 		</div>
@@ -63,7 +63,7 @@ function dpm_main_callback() {
 			<label for="dpm_meta_key_search">Meta Key:</label>
 			<input name="dpm_meta_key_search" id="dpm_meta_key_search" type="text" />
 
-			<button type="submit" class="button button-primary">Delete Post Meta</button>
+			<input type="submit" class="button button-primary" onclick="return confirm('We are about to delete all post meta based on this meta key. Are you sure?')" value="Delete Post Meta" />
 		</form>
 	</div>
 	<?php
