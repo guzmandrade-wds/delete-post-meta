@@ -1,7 +1,6 @@
 === Delete Post Meta ===
 Contributors: h4l9k
 Tags: delete-post-meta, remove-post-meta, delete-meta-data, meta-data
-Requires at least: 6.3
 Tested up to: 6.3
 Stable tag: trunk
 License: GPLv3 or later
