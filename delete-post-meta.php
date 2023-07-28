@@ -38,25 +38,26 @@ function dpm_register_submenu_page() {
  * @return null
  */
 function dpm_main_callback() {
+	global $wpdb;
 	if ( isset( $_POST['dpm_meta_key_search_nonce'] )
 		&& wp_verify_nonce( $_POST['dpm_meta_key_search_nonce'], 'dpm_meta_key_action' )
 	) {
 		$meta_key_search = isset( $_POST['dpm_meta_key_search'] ) ? sanitize_text_field( $_POST['dpm_meta_key_search'] ) : false;
-
 		if ( $meta_key_search ) {
-			/**
-			 * @link https://developer.wordpress.org/reference/functions/delete_metadata/
-			 * Accepts 'post', 'comment', 'term', 'user', or any other object type with an associated meta table.
-			 */
-			$object_type = apply_filters( 'dpm_meta_key_object_type', 'post' );
-			delete_metadata( $object_type, 0, $meta_key_search, null, true );
+			$wpdb->query(
+				$wpdb->prepare(
+					"DELETE from $wpdb->postmeta
+					WHERE meta_key = %s",
+					$meta_key_search,
+				)
+			);
 		}
 	}
 	?>
 	<div class="wrap"><div id="icon-tools" class="icon32"></div>
-		<h2><?php echo __('Delete Post Meta', 'delete-post-meta'); ?></h2>
+		<h2><?php esc_html_e( 'Delete Post Meta', 'delete-post-meta' ); ?></h2>
 		<div class="notice notice-warning inline">
-			<p><strong>Warning:</strong> Use this plugin with caution. It will delete all post meta based on a meta key.</p>
+			<p><strong><?php esc_html_e( 'Warning:', 'delete-post-meta' ); ?></strong> <?php esc_html_e( 'Use this plugin with caution. It will delete all post meta based on a meta key.', 'delete-post-meta' ); ?></p>
 		</div>
 		<form method="post">
 			<?php wp_nonce_field( 'dpm_meta_key_action', 'dpm_meta_key_search_nonce' ); ?>
