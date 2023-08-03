@@ -4,7 +4,7 @@
  * Plugin URI:        https://github.com/guzmandrade-wds/delete-post-meta
  * Description:       Delete Post Meta based on meta key.
  * Version:           1.0.0
- * Requires at least: 6.3
+ * Requires at least: 6.2
  * Requires PHP:      7.4
  * Author:            Mauricio Andrade
  * Author URI:        https://profiles.wordpress.org/h4l9k/
