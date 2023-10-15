@@ -20,6 +20,10 @@ WARNING! Use this plugin with caution. It will delete all post meta based on a m
 
 == Changelog ==
 
+= 1.1 =
+
+* Improvements were added based on feedback from the WordPress Plugin Review Team.
+
 = 1.0 =
 
 * Initial version.
