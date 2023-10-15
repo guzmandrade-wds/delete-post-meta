@@ -13,36 +13,51 @@
  * Text Domain:       delete-post-meta
  */
 
-add_action( 'admin_menu', 'dpm_register_submenu_page' );
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+
+// Wait for plugins to be loaded before registering actions to validate admin access.
+add_action( 'plugins_loaded', 'delete_post_meta_init' );
+
+/**
+ * Validates admin access and adds action hook.
+ *
+ * @return void
+ */
+function delete_post_meta_init() {
+	if ( current_user_can( 'activate_plugins' ) ) {
+		add_action( 'admin_menu', 'delete_post_meta_submenu' );
+	}
+}
 
 /**
  * Registers a submenu page for the 'tools.php' admin page.
  *
  * @return null
  */
-function dpm_register_submenu_page() {
+function delete_post_meta_submenu() {
 	add_submenu_page(
 		'tools.php',
 		__( 'Delete Post Meta', 'delete-post-meta' ),
 		__( 'Delete Post Meta', 'delete-post-meta' ),
 		'activate_plugins',
 		'delete-post-meta',
-		'dpm_main_callback'
+		'delete_post_meta_callback'
 	);
 }
 
 /**
- * Main callback function. If the dpm_meta_key_search value is not false, it calls `delete_metadata` to delete
- * all post meta based on the meta key.
+ * Main callback function. If the delete_post_meta_key_search value is not false, it calls `delete_metadata` to delete all post meta based on the meta key.
  *
  * @return null
  */
-function dpm_main_callback() {
+function delete_post_meta_callback() {
 	global $wpdb;
-	if ( isset( $_POST['dpm_meta_key_search_nonce'] )
-		&& wp_verify_nonce( $_POST['dpm_meta_key_search_nonce'], 'dpm_meta_key_action' )
+	if ( isset( $_POST['delete_post_meta_nonce'] )
+		&& check_admin_referer( 'delete_post_meta_action', 'delete_post_meta_nonce' )
 	) {
-		$meta_key_search = isset( $_POST['dpm_meta_key_search'] ) ? sanitize_text_field( $_POST['dpm_meta_key_search'] ) : false;
+		$meta_key_search = isset( $_POST['delete_post_meta_key_search'] ) ? sanitize_text_field( $_POST['delete_post_meta_key_search'] ) : false;
 		if ( $meta_key_search ) {
 			$wpdb->query(
 				$wpdb->prepare(
@@ -60,9 +75,9 @@ function dpm_main_callback() {
 			<p><strong><?php esc_html_e( 'Warning:', 'delete-post-meta' ); ?></strong> <?php esc_html_e( 'Use this plugin with caution. It will delete all post meta based on a meta key.', 'delete-post-meta' ); ?></p>
 		</div>
 		<form method="post">
-			<?php wp_nonce_field( 'dpm_meta_key_action', 'dpm_meta_key_search_nonce' ); ?>
-			<label for="dpm_meta_key_search">Meta Key:</label>
-			<input name="dpm_meta_key_search" id="dpm_meta_key_search" type="text" />
+			<?php wp_nonce_field( 'delete_post_meta_action', 'delete_post_meta_nonce' ); ?>
+			<label for="delete_post_meta_key_search">Meta Key:</label>
+			<input name="delete_post_meta_key_search" id="delete_post_meta_key_search" type="text" />
 
 			<input type="submit" class="button button-primary" onclick="return confirm('We are about to delete all post meta based on this meta key. Are you sure?')" value="Delete Post Meta" />
 		</form>
