@@ -3,7 +3,7 @@
  * Plugin Name:       Delete Post Meta
  * Plugin URI:        https://github.com/guzmandrade-wds/delete-post-meta
  * Description:       Delete Post Meta based on meta key.
- * Version:           1.1.1
+ * Version:           1.1.2
  * Requires at least: 6.3
  * Requires PHP:      7.4
  * Author:            Mauricio Andrade
@@ -59,6 +59,7 @@ function delete_post_meta_callback() {
 	) {
 		$meta_key_search = isset( $_POST['delete_post_meta_key_search'] ) ? sanitize_text_field( $_POST['delete_post_meta_key_search'] ) : false;
 		if ( $meta_key_search ) {
+			// phpcs:ignore WordPress.DB.DirectDatabaseQuery -- We delete directly from the database, so we don't handle possible filters applying to it.
 			$wpdb->query(
 				$wpdb->prepare(
 					"DELETE from $wpdb->postmeta

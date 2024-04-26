@@ -1,8 +1,8 @@
 === Delete Post Meta ===
 Contributors: h4l9k
 Tags: delete-post-meta, remove-post-meta, delete-meta-data, meta-data
-Tested up to: 6.4.2
-Stable tag: 1.1.1
+Tested up to: 6.5.2
+Stable tag: 1.1.2
 License: GPLv3 or later
 License URI: https://www.gnu.org/licenses/gpl-3.0.html
 
@@ -19,6 +19,14 @@ WARNING! Use this plugin with caution. It will delete all post meta based on a m
 1. Tools admin page to input the meta key.
 
 == Changelog ==
+
+= 1.1.2 =
+
+* Tested compatibilty with WordPress 6.5.2.
+
+= 1.1.1 =
+
+* Minor updates and confirmation of WordPress compatibilty with 6.4.2.
 
 = 1.1 =
 
